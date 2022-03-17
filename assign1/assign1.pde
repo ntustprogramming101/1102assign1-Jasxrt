@@ -45,13 +45,17 @@ void draw() {
   stroke(255, 255, 0);
   fill(253, 184, 19);
   strokeWeight(5);
-  ellipse(590, 50, 60, 60);
+  ellipse(590, 50,120,120);
   //sun
-  soldierX++;
+  soldierX+=4;
   image(soldier, soldierX, soldierY);
+  if(soldierX >= width){
+      soldierX = -80;
+    }
   soldierX%=width;
   //soldier walking
   stroke(255, 0, 0);
+  strokeWeight(10);
   pushMatrix();
   translate(robotX+25, robotY+37);
   lazerX-=2;
