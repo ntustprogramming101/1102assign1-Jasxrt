@@ -11,7 +11,9 @@ int robotX;
 int robotY;
 //robot x y
 int lazerX;
-//lazerx
+int lazerXX, lazerY;
+int lazerLimit;
+//lazerx,xx,y
 void setup() {
   size(640, 480, P2D);
   sky=loadImage("bg.jpg");
@@ -22,9 +24,13 @@ void setup() {
   soldierY=160+floor((random(160, 480))%4)*80;
   //soldier random y
   robot=loadImage("robot.png");
-  robotX=160+floor(random(0, 400));
+  robotX=160+floor(random(0, 6))*80;
   robotY=160+floor((random(160, 480))%4)*80;
   //robot random x y
+  lazerX=robotX+25;
+  lazerXX=robotX+25;
+  lazerY=robotY+37;
+  lazerLimit=lazerX-160-25;
 }
 
 void draw() {
@@ -45,24 +51,30 @@ void draw() {
   stroke(255, 255, 0);
   fill(253, 184, 19);
   strokeWeight(5);
-  ellipse(590, 50,120,120);
+  ellipse(590, 50, 120, 120);
   //sun
   soldierX+=4;
   image(soldier, soldierX, soldierY);
-  if(soldierX >= width){
-      soldierX = -80;
-    }
+  if (soldierX >= width) {
+    soldierX = -80;
+  }
   soldierX%=width;
   //soldier walking
-  stroke(255, 0, 0);
-  strokeWeight(10);
-  pushMatrix();
-  translate(robotX+25, robotY+37);
-  lazerX-=2;
-  line(lazerX,0,lazerX-40,0);
-  lazerX%=185;
-  popMatrix();
-  //robot lazer
+
   image(robot, robotX, robotY);
   //robot place
+  stroke(255, 0, 0);
+  strokeWeight(10);
+  line(lazerX, lazerY, lazerXX, lazerY);
+  lazerX-=2;
+
+  if (lazerX<=robotX+25-40){
+    lazerXX-=2;
+  }
+  //robot lazer 
+  if(lazerX<=lazerLimit){
+    lazerX=lazerX+80*2+25;
+    lazerXX=robotX+25;
+  }
+    //robot lazer restart
 }
